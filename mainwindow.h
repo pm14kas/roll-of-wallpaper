@@ -7,6 +7,7 @@
 #include <QtMath>
 #include "math_prog.h"
 #include "parser.h"
+#include "interval.h"
 
 namespace Ui {
 class MainWindow;

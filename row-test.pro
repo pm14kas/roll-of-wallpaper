@@ -1,16 +1,17 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2018-03-07T18:09:39
+# Project created by QtCreator 2018-05-07T20:27:32
 #
 #-------------------------------------------------
 
-QT       += core gui
-CONFIG += c++11
-LOCAL_CPPFLAGS  += -std=c++11
+QT       += testlib
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT       -= gui
 
-TARGET = MPlab1
+TARGET = tst_row-test
+CONFIG   += console
+CONFIG   -= app_bundle
+
 TEMPLATE = app
 
 # The following define makes your compiler emit warnings if you use
@@ -26,15 +27,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += \
-        main.cpp \
-        mainwindow.cpp \
-    math_prog.cpp
+        tst_row-test.cpp \
+    interval.cpp
 
 HEADERS += \
-        mainwindow.h \
-    math_prog.h \
-    parser.h \
-    parser_interval.h
-
-FORMS += \
-        mainwindow.ui
+    interval.h
