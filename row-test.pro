@@ -31,4 +31,5 @@ SOURCES += \
     interval.cpp
 
 HEADERS += \
-    interval.h
+    interval.h \
+    intervalmath.h

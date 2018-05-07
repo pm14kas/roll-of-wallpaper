@@ -34,7 +34,8 @@ HEADERS += \
         mainwindow.h \
     math_prog.h \
     parser.h \
-    parser_interval.h
+    parser_interval.h \
+    intervalmath.h
 
 FORMS += \
         mainwindow.ui

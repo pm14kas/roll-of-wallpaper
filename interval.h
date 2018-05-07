@@ -17,7 +17,10 @@ private:
 public:
 
     enum Exception {
-        ExceptionParseStructure, ExceptionParseNumber, ExceptionOther
+        ExceptionParseStructure,
+        ExceptionParseNumber,
+        ExceptionCalculation,
+        ExceptionOther
     };
 
     Interval(double value);
