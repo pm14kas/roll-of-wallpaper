@@ -39,6 +39,7 @@ Output math_prog::MonteCarlo(Parser f, std::vector<KeyValue> limitStart, std::ve
     }else{
         result.result = xmin;
     }
+    result.fmin = fmin;
     return result;
 }
 
@@ -70,6 +71,7 @@ Output math_prog::ImitOtzh(Parser f, std::vector<KeyValue> limitStart, std::vect
     else
         result.result = x;
     result.timer = QDateTime::currentMSecsSinceEpoch()-timer;
+    result.fmin = f.calc(result.result);
     return result;
 }
 

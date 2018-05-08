@@ -287,3 +287,118 @@ void MainWindow::onSpinBox(int value)
     ui->dgvXLimInput->setVerticalHeaderLabels(headersLimits);
     ui->dgvOut->setVerticalHeaderLabels(headersOut);
 }
+
+void MainWindow::on_bG_clicked()
+{
+    try
+    {
+        std::vector<KeyValue> start;
+        std::vector<KeyValue> end;
+        for (int i = 0; i < ui->dgvXLimInput->rowCount(); i++)
+        {
+            start.push_back(KeyValue(ui->dgvXLimInput->item(i,0)->text().replace(',', '.').toStdString(),ui->dgvXLimInput->item(i,1)->text().replace(',', '.').toDouble()));
+            end.push_back(KeyValue(ui->dgvXLimInput->item(i,0)->text().replace(',', '.').toStdString(),ui->dgvXLimInput->item(i,2)->text().replace(',', '.').toDouble()));
+            if (start[i].d > end[i].d) throw 56;
+        }
+        Parser f(ui->cbFunction->text().replace(',', '.').toStdString());
+        double iters = ui->tIterG->text().replace(',', '.').toDouble();
+        double intersecs = ui->tIntersectionsG->text().replace(',', '.').toDouble();
+        double mutates = ui->tMutationG->text().replace(',', '.').toDouble();
+        double popul = ui->tPopulG->text().replace(',', '.').toDouble();
+        double gens = ui->tGenersG->text().replace(',', '.').toDouble();
+        double best = ui->tBestG->text().replace(',', '.').toDouble();
+
+        if (intersecs < 0.0 || intersecs > 1.0)
+        {
+            QMessageBox::warning(this, "Ошибка", QString("Коэффициент скрещеваний должен быть в диапазоне [0,1]!"));
+            return;
+        }
+
+        if (mutates < 0.0 || mutates > 1.0)
+        {
+            QMessageBox::warning(this, "Ошибка", QString("Коэффициент мутаций должен быть в диапазоне [0,1]!"));
+            return;
+        }
+
+        int EliteCount = (int)qFloor((double)popul * best);
+        if (EliteCount <= 0)
+        {
+            QMessageBox::warning(this, "Ошибка", QString("Указан слишком маленький процент лучших особей. В расчетах будет выбираться только одна лучшая особь!"));
+            EliteCount = 1;
+        }
+        if (EliteCount > popul)
+        {
+
+            QMessageBox::warning(this, "Ошибка", QString("Указан слишком большой процент лучших особей. В расчётах все особи будут считаться лучшими, минимум скорее всего не будет достигнут."));
+            EliteCount = popul;
+        }
+
+        Output result = lab2::calc(f, start, end, iters, intersecs, mutates, popul, gens, best, EliteCount);
+
+        QStringList headers;
+        headers.push_back("f(x)");
+        if (!(ui->dgvOut->item(0, 0)))
+        {
+            ui->dgvOut->setItem(0, 0, new QTableWidgetItem(QString::number(f.calc(result.result))));
+        }
+        else
+        {
+            ui->dgvOut->item(0, 0)->setText(QString::number(f.calc(result.result)));
+        }
+
+        for (unsigned int i = 0; i < result.result.size(); i++)
+        {
+            if (!(ui->dgvOut->item(i+1, 0)))
+            {
+                ui->dgvOut->setItem(i+1, 0, new QTableWidgetItem(QString::number(result.result[i].d)));
+            }
+            else
+            {
+                ui->dgvOut->item(i+1, 0)->setText(QString::number(result.result[i].d));
+            }
+            headers.push_back(QString::fromStdString(result.result[i].s));
+        }
+
+        ui->dgvOut->setVerticalHeaderLabels(headers);
+
+        //i dont have a clue about qtimespan or whatever, and i dont give a fcuk
+        int secs = qFloor(result.timer/1000);
+        result.timer = result.timer % 1000;
+        int mins = qFloor(secs/60);
+        secs = secs%60;
+        int hours = qFloor(mins/60);
+        mins = mins%60;
+        ui->tbIOtime->setText(QString::number(result.timer));
+        ui->tbIOtime->setText(QString::number(hours)+":"+QString::number(mins)+":"+QString::number(secs)+"."+QString::number(result.timer));
+
+        QMessageBox::about(this, "Успех", "Расчет произведен");
+    }
+    catch (int cerr)
+    {
+        if (cerr == Parser::ERROR_DIVISION_BY_ZERO)
+        {
+            QMessageBox::critical(this, QString("Внимание!"), QString("Деление на ноль!\t"));
+        }
+        else if (cerr == Parser::ERROR_PARENTHESIS)
+        {
+            QMessageBox::critical(this, QString("Внимание!"), QString("Ошибка в скобках!\t"));
+        }
+        else if (cerr == 10)
+        {
+            QMessageBox::critical(this, QString("Внимание!"), QString("Ошибка задания переменных!\t"));
+        }
+        else if (cerr == Parser::ERROR_PARSE)
+        {
+            QMessageBox::critical(this, QString("Внимание!"), QString("Ошибка парсинга!\t"));
+        }
+        else
+        {
+            QMessageBox::critical(this, QString("Внимание!"), QString("Неизвестное исключение!\t"));
+        }
+    }
+
+    catch (std::string f)
+    {
+        QMessageBox::warning(this, ("Внимание!"), QString("Неизвестная функция:\t\t\n'") + QString::fromStdString(f)+"'");
+    }
+}

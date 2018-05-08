@@ -3,10 +3,12 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QString>
 #include <QDateTime>
 #include <QtMath>
 #include <QScriptEngine>
 #include "math_prog.h"
+#include "lab2.h"
 #include "parser.h"
 #include "interval.h"
 
@@ -30,6 +32,8 @@ public slots:
     void bIOclick();
     void bMCclick();
     void onSpinBox(int value);
+private slots:
+    void on_bG_clicked();
 };
 
 #endif // MAINWINDOW_H
