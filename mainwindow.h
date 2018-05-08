@@ -3,12 +3,18 @@
 
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QString>
 #include <QDateTime>
 #include <QtMath>
 #include <QScriptEngine>
+#include <QLineEdit>
 #include "math_prog.h"
+#include "lab2.h"
 #include "parser.h"
 #include "interval.h"
+#include "parser_interval.h"
+#include "intervalmethod.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -21,6 +27,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void showResult(int index, Parser f, Output o, QLineEdit* tb);
 
 private:
     Ui::MainWindow *ui;
@@ -30,6 +37,9 @@ public slots:
     void bIOclick();
     void bMCclick();
     void onSpinBox(int value);
+private slots:
+    void on_bG_clicked();
+    void on_bI_clicked();
 };
 
 #endif // MAINWINDOW_H

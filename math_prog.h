@@ -4,12 +4,13 @@
 #include <QDateTime>
 #include <QtMath>
 #include "parser.h"
-#include "parser.h"
+#include "parser_interval.h"
 
 struct Output
 {
 public:
     std::vector<KeyValue> result;
+    double fmin;
     qint64 timer;
 
     Output()

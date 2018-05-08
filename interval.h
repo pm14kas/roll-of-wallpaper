@@ -8,12 +8,16 @@
 
 class Interval
 {
-private:
+public:
     double left;
     double right;
 
     static double min(double v1, double v2, double v3, double v4);
     static double max(double v1, double v2, double v3, double v4);
+
+    static double min(double v1, double v2);
+    static double max(double v1, double v2);
+
 public:
 
     enum Exception {
@@ -23,6 +27,7 @@ public:
         ExceptionOther
     };
 
+    Interval();
     Interval(double value);
     Interval(double left, double right);
     Interval(const Interval &other);
@@ -46,6 +51,9 @@ public:
 
     static Interval fromString(QString s);
     static Interval fromString(std::string s);
+
+    static bool TryParse(std::string s, Interval& result);
+
 
 };
 
