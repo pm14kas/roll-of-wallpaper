@@ -25,10 +25,20 @@ Output math_prog::MonteCarlo(Parser f, std::vector<KeyValue> limitStart, std::ve
 
     Output result;
     result.timer = QDateTime::currentMSecsSinceEpoch()-timer;
-    if(HJ)
-        result.result = HookJeeves(f, xmin, limitStart, limitEnd, ((double)qrand()/(double)RAND_MAX)-0.5, 0.01, 3, 100);
-    else
+    if(HJ){
+        result.result = HookJeeves(
+            f,
+            xmin,
+            limitStart,
+            limitEnd,
+            ((double)qrand()/(double)RAND_MAX)-0.5,
+            0.01,
+            3,
+            100
+        );
+    }else{
         result.result = xmin;
+    }
     return result;
 }
 

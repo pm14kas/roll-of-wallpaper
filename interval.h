@@ -29,6 +29,7 @@ public:
     Interval(QString s);
     Interval(std::string s);
 
+    Interval operator=(const Interval &other);
     Interval operator+(const Interval &rhs);
     Interval operator-(const Interval &rhs);
     Interval operator*(const Interval &rhs);

@@ -61,6 +61,14 @@ Interval::Interval(std::string s)
 
 }
 
+Interval Interval::operator=(const Interval &other)
+{
+    this->left = other.left;
+    this->right = other.right;
+
+    return (*this);
+}
+
 Interval Interval::operator+(const Interval &rhs)
 {
     return Interval(this->left + rhs.left, this->right + rhs.right);
