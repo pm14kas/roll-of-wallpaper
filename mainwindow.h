@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QDateTime>
 #include <QtMath>
+#include <QScriptEngine>
 #include "math_prog.h"
 #include "parser.h"
 #include "interval.h"

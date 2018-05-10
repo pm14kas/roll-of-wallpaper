@@ -2,6 +2,7 @@
 #include <QtTest>
 #include <string>
 #include "interval.h"
+#include "parser.h"
 
 class RowTest : public QObject
 {
@@ -16,6 +17,10 @@ private Q_SLOTS:
     void testCaseIntervalCreation();
     void testCaseIntervalArithmetic();
     void testCaseIntervalString();
+
+
+    void testCaseParserArithmetic();
+    void testCaseParserFunctions();
 };
 
 RowTest::RowTest()
@@ -72,6 +77,36 @@ void RowTest::testCaseIntervalString()
     }
 
 }
+
+void RowTest::testCaseParserArithmetic()
+{
+    Parser parserPlus("5+3+0");
+    Parser parserMinus("5-3-2");
+    Parser parserMultiply("2*(2+2)*2");
+    Parser parserDivide("10/5");
+
+    std::vector<KeyValue> varmap;
+
+    QCOMPARE(parserPlus.calc(varmap), 8.0);
+    QCOMPARE(parserMinus.calc(varmap), 0.0);
+    QCOMPARE(parserMultiply.calc(varmap), 16.0);
+    QCOMPARE(parserDivide.calc(varmap), 2.0);
+
+}
+void RowTest::testCaseParserFunctions()
+{
+    Parser parserSin("sin(pi/2)");
+    Parser parserCos("cos(0)");
+    Parser parserSaraev("e^abs(-5)");
+    Parser parserSaraevCheck("e^5");
+
+    std::vector<KeyValue> varmap;
+
+    QCOMPARE(parserSin.calc(varmap), 1.0);
+    QCOMPARE(parserCos.calc(varmap), 1.0);
+    QCOMPARE(parserSaraev.calc(varmap), parserSaraevCheck.calc(varmap));
+}
+
 
 QTEST_APPLESS_MAIN(RowTest)
 

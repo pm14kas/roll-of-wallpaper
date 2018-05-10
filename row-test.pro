@@ -32,4 +32,5 @@ SOURCES += \
 
 HEADERS += \
     interval.h \
-    intervalmath.h
+    intervalmath.h \
+    parser.h

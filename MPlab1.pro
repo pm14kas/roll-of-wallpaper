@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui script
 CONFIG += c++11
 LOCAL_CPPFLAGS  += -std=c++11
 
@@ -28,14 +28,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
         main.cpp \
         mainwindow.cpp \
-    math_prog.cpp
+    math_prog.cpp \
+    interval.cpp
 
 HEADERS += \
         mainwindow.h \
     math_prog.h \
-    parser.h \
     parser_interval.h \
-    intervalmath.h
+    intervalmath.h \
+    interval.h \
+    parser.h
 
 FORMS += \
         mainwindow.ui

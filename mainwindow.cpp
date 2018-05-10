@@ -38,7 +38,7 @@ void MainWindow::aboutHelp()
                        QString("<p><i>arctg</i> - арктангенс</p>")+
                        QString("<p><i>tg</i> - тангенс</p>")+
                        QString("<p><i>sqrt</i> - квадратный корень</p>")+
-                       QString("<p class=\"header\"><b>Системные переменные:<b></p>")+
+                       QString("<p class=\"header\"><b>Системные переменные:</b></p>")+
                        QString("<p><i>e</i>, <i>pi</i></p>"));
 }
 
@@ -141,10 +141,11 @@ void MainWindow::bMCclick()
         std::vector<KeyValue> end;
         for (int i = 0; i < ui->dgvXLimInput->rowCount(); i++)
         {
-            start.push_back(KeyValue(ui->dgvXLimInput->item(i,0)->text().replace(',', '.').toStdString(),ui->dgvXLimInput->item(i,1)->text().replace(',', '.').toDouble()));
-            end.push_back(KeyValue(ui->dgvXLimInput->item(i,0)->text().replace(',', '.').toStdString(),ui->dgvXLimInput->item(i,2)->text().replace(',', '.').toDouble()));
+            start.push_back(KeyValue(ui->dgvXLimInput->item(i,0)->text().replace(',', '.').toStdString(), ui->dgvXLimInput->item(i,1)->text().replace(',', '.').toDouble()));
+            end.push_back(KeyValue(ui->dgvXLimInput->item(i,0)->text().replace(',', '.').toStdString(), ui->dgvXLimInput->item(i,2)->text().replace(',', '.').toDouble()));
             if (start[i].d > end[i].d) throw 56;
         }
+
 
         unsigned int maxIterations = qAbs(ui->tbSizeTest->text().toUInt());
 
