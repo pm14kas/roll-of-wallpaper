@@ -80,15 +80,6 @@ Output lab2::calc(Parser f,
     {
         return a.F < b.F;
     });
-    for(int i = 0; i < generation.size(); i++){
-        for(int j = i + 1; j < generation.size(); j++){
-            if ((generation[i].F) < (generation[j].F)){
-                temp = generation[i].F;
-                generation[i].F = generation[j].F;
-                generation[j].F = temp;
-            }
-        }
-    }
     //лучший станет на первом месте
     }
 

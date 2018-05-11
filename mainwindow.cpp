@@ -333,7 +333,7 @@ void MainWindow::on_bG_clicked()
             EliteCount = popul;
         }
 
-        Output result = lab2::calc(f, start, end, iters, intersecs, mutates, popul, gens, best, EliteCount);
+        Output result = lab2::calc(f, start, end, iters, intersecs, mutates, popul, gens, EliteCount);
 
         QStringList headers;
         headers.push_back("f(x)");
