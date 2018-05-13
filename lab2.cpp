@@ -19,41 +19,33 @@ Output lab2::calc(Parser f,
     // формирование рабочей структуры данных
     Individ::g_size = varend;// установить глобально количество хромосом для индивида
     std::vector<Individ> generation;  //одно поколение
-    double fmin = DBL_MAX;
+    //double fmin = DBL_MAX;
 
-    std::vector<KeyValue> x = limitEnd;
+    //std::vector<KeyValue> x = limitEnd;
     //сформировать первую случайную популяцию
 
     qint64 timer = QDateTime::currentMSecsSinceEpoch();
+    Individ individ(limitEnd);
+
     for (int pr = 0; pr < iters; pr++)
     {
     for (int i = 0; i < popul; i++)
     {
-        for (int k = 0; k < 10; k++)
-        {
-            Individ individ(limitEnd);
+//        for (int k = 0; k < 10; k++)
+//        {
             for (int j = 0; j < varend; j++)
             {
-                individ.X[j] = limitStart[j].d + (limitEnd[j].d - limitStart[j].d) * (double)rand()/(RAND_MAX);
-                x[j].d = individ.X[j];
+                individ.X[j].d = limitStart[j].d + (limitEnd[j].d - limitStart[j].d) * (double)rand()/(RAND_MAX);
+                //x[j].d = individ.X[j];
             }
 
-            individ.F = f.calc(x);
-            if (individ.F < fmin)
-            {
-                for (int l = 0; l < varend; l++)
-                {
-                    individ.X[l] = x[l].d;
-                    fmin = individ.X[l];
-                }
-                //fmin = individ.F;
-            }
+            individ.F = f.calc(individ.X);
+
             individ.ToGray(limitStart, limitEnd);
             generation.push_back(individ);
-        }
+//        }
     }
     // Цикл поколений
-    double temp;
     for (int gen = 0; gen < gens; gen++)
     {
         std::sort(generation.begin(), generation.end(), [](const Individ& a, const Individ& b)
@@ -64,13 +56,12 @@ Output lab2::calc(Parser f,
 
         for (int i = EliteCount; i < popul; i++)
         {
-            if((double)rand()/(RAND_MAX)<=mutates) generation[i].Mutation(limitStart, limitEnd);
-            if((double)rand()/(RAND_MAX)<=intersecs) generation[i].Crossingover(generation[(int)qFloor((double)(EliteCount-1)*(double)rand()/(RAND_MAX))], limitStart);
+            if((double)rand()/RAND_MAX<=mutates)
+                generation[i].Mutation(limitStart, limitEnd);
+            if((double)rand()/RAND_MAX<=intersecs)
+                generation[i].Crossingover(generation[0], limitStart);
 
-            for (int l = 0; l < varend; l++){
-                x[l].d = generation[i].X[l];
-            }
-            generation[i].F = f.calc(x);
+            generation[i].F = f.calc(generation[i].X);
         }
     }//Цикл поколений
 
@@ -84,11 +75,9 @@ Output lab2::calc(Parser f,
     }
 
     Output o;
-    if (generation.size() != 0)
-    {
-        o.result = x;
-        o.timer = QDateTime::currentMSecsSinceEpoch()-timer;
-        o.fmin = generation[0].F;
-    }
+
+    o.result = generation[0].X;
+    o.timer = QDateTime::currentMSecsSinceEpoch()-timer;
+    o.fmin = generation[0].F;
     return o;
 }

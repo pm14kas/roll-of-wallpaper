@@ -22,6 +22,45 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::showResult(int index, Parser f, Output o, QLineEdit* tb)
+{
+    QStringList headers;
+    headers.push_back("f(x)");
+    if (!(ui->dgvOut->item(0, index)))
+    {
+        ui->dgvOut->setItem(0, index, new QTableWidgetItem(QString::number(f.calc(o.result))));
+    }
+    else
+    {
+        ui->dgvOut->item(0, index)->setText(QString::number(f.calc(o.result)));
+    }
+
+    for (unsigned int i = 0; i < o.result.size(); i++)
+    {
+        if (!(ui->dgvOut->item(i+1, index)))
+        {
+            ui->dgvOut->setItem(i+1, index, new QTableWidgetItem(QString::number(o.result[i].d)));
+        }
+        else
+        {
+            ui->dgvOut->item(i+1, index)->setText(QString::number(o.result[i].d));
+        }
+        headers.push_back(QString::fromStdString(o.result[i].s));
+    }
+
+    ui->dgvOut->setVerticalHeaderLabels(headers);
+
+    //i dont have a clue about qtimespan or whatever, and i dont give a fcuk
+    int secs = qFloor(o.timer/1000);
+    o.timer = o.timer % 1000;
+    int mins = qFloor(secs/60);
+    secs = secs%60;
+    int hours = qFloor(mins/60);
+    mins = mins%60;
+    tb->setText(QString::number(hours)+":"+QString::number(mins)+":"+QString::number(secs)+"."+QString::number(o.timer));
+    QMessageBox::about(this, "Успех", "Расчет произведен");
+}
+
 void MainWindow::aboutQT()
 {
     QMessageBox::aboutQt(this);
@@ -63,44 +102,7 @@ void MainWindow::bIOclick()
         double eps = ui->tbEps->text().replace(',', '.').toDouble();
 
         Output result = math_prog::ImitOtzh(f, start,end,T,L, r,eps,ui->checkHJIO->isChecked() );
-
-        QStringList headers;
-        headers.push_back("f(x)");
-        if (!(ui->dgvOut->item(0, 0)))
-        {
-            ui->dgvOut->setItem(0, 0, new QTableWidgetItem(QString::number(f.calc(result.result))));
-        }
-        else
-        {
-            ui->dgvOut->item(0, 0)->setText(QString::number(f.calc(result.result)));
-        }
-
-        for (unsigned int i = 0; i < result.result.size(); i++)
-        {
-            if (!(ui->dgvOut->item(i+1, 0)))
-            {
-                ui->dgvOut->setItem(i+1, 0, new QTableWidgetItem(QString::number(result.result[i].d)));
-            }
-            else
-            {
-                ui->dgvOut->item(i+1, 0)->setText(QString::number(result.result[i].d));
-            }
-            headers.push_back(QString::fromStdString(result.result[i].s));
-        }
-
-        ui->dgvOut->setVerticalHeaderLabels(headers);
-
-        //i dont have a clue about qtimespan or whatever, and i dont give a fcuk
-        int secs = qFloor(result.timer/1000);
-        result.timer = result.timer % 1000;
-        int mins = qFloor(secs/60);
-        secs = secs%60;
-        int hours = qFloor(mins/60);
-        mins = mins%60;
-        ui->tbIOtime->setText(QString::number(result.timer));
-        ui->tbIOtime->setText(QString::number(hours)+":"+QString::number(mins)+":"+QString::number(secs)+"."+QString::number(result.timer));
-
-        QMessageBox::about(this, "Успех", "Расчет произведен");
+        showResult(1, f, result, ui->tbIOtime);
     }
     catch (int cerr)
     {
@@ -151,46 +153,8 @@ void MainWindow::bMCclick()
 
         Parser f(ui->cbFunction->text().replace(',', '.').toStdString());
         Output result;
-
         result = math_prog::MonteCarlo(f,start, end, maxIterations, ui->checkHJMK->isChecked());
-
-        QStringList headers;
-        headers.push_back("f(x)");
-        if (!(ui->dgvOut->item(0, 1)))
-        {
-            ui->dgvOut->setItem(0, 1, new QTableWidgetItem(QString::number(f.calc(result.result))));
-        }
-        else
-        {
-            ui->dgvOut->item(0, 1)->setText(QString::number(f.calc(result.result)));
-        }
-
-        for (unsigned int i = 0; i < result.result.size(); i++)
-        {
-            if (!(ui->dgvOut->item(i+1, 1)))
-            {
-                ui->dgvOut->setItem(i+1, 1, new QTableWidgetItem(QString::number(result.result[i].d)));
-            }
-            else
-            {
-                ui->dgvOut->item(i+1, 1)->setText(QString::number(result.result[i].d));
-            }
-            headers.push_back(QString::fromStdString(result.result[i].s));
-        }
-
-        ui->dgvOut->setVerticalHeaderLabels(headers);
-
-        //i dont have a clue about qtimespan or whatever, and i dont give a fcuk
-        int secs = qFloor(result.timer/1000);
-        result.timer = result.timer % 1000;
-        int mins = qFloor(secs/60);
-        secs = secs%60;
-        int hours = qFloor(mins/60);
-        mins = mins%60;
-        ui->tbMCtime->setText(QString::number(result.timer));
-        ui->tbMCtime->setText(QString::number(hours)+":"+QString::number(mins)+":"+QString::number(secs)+"."+QString::number(result.timer));
-
-        QMessageBox::about(this, "Успех", "Расчет произведен");
+        showResult(1, f, result, ui->tbMCtime);
     }
     catch (int cerr)
     {
@@ -320,7 +284,7 @@ void MainWindow::on_bG_clicked()
             return;
         }
 
-        int EliteCount = (int)qFloor((double)popul * best);
+        int EliteCount = qFloor((double)popul * best);
         if (EliteCount <= 0)
         {
             QMessageBox::warning(this, "Ошибка", QString("Указан слишком маленький процент лучших особей. В расчетах будет выбираться только одна лучшая особь!"));
@@ -335,43 +299,7 @@ void MainWindow::on_bG_clicked()
 
         Output result = lab2::calc(f, start, end, iters, intersecs, mutates, popul, gens, EliteCount);
 
-        QStringList headers;
-        headers.push_back("f(x)");
-        if (!(ui->dgvOut->item(0, 0)))
-        {
-            ui->dgvOut->setItem(0, 0, new QTableWidgetItem(QString::number(f.calc(result.result))));
-        }
-        else
-        {
-            ui->dgvOut->item(0, 0)->setText(QString::number(f.calc(result.result)));
-        }
-
-        for (unsigned int i = 0; i < result.result.size(); i++)
-        {
-            if (!(ui->dgvOut->item(i+1, 0)))
-            {
-                ui->dgvOut->setItem(i+1, 0, new QTableWidgetItem(QString::number(result.result[i].d)));
-            }
-            else
-            {
-                ui->dgvOut->item(i+1, 0)->setText(QString::number(result.result[i].d));
-            }
-            headers.push_back(QString::fromStdString(result.result[i].s));
-        }
-
-        ui->dgvOut->setVerticalHeaderLabels(headers);
-
-        //i dont have a clue about qtimespan or whatever, and i dont give a fcuk
-        int secs = qFloor(result.timer/1000);
-        result.timer = result.timer % 1000;
-        int mins = qFloor(secs/60);
-        secs = secs%60;
-        int hours = qFloor(mins/60);
-        mins = mins%60;
-        ui->tbIOtime->setText(QString::number(result.timer));
-        ui->tbIOtime->setText(QString::number(hours)+":"+QString::number(mins)+":"+QString::number(secs)+"."+QString::number(result.timer));
-
-        QMessageBox::about(this, "Успех", "Расчет произведен");
+        showResult(2, f, result, ui->tbGtime);
     }
     catch (int cerr)
     {

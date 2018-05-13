@@ -7,6 +7,7 @@
 #include <QDateTime>
 #include <QtMath>
 #include <QScriptEngine>
+#include <QLineEdit>
 #include "math_prog.h"
 #include "lab2.h"
 #include "parser.h"
@@ -23,6 +24,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    void showResult(int index, Parser f, Output o, QLineEdit* tb);
 
 private:
     Ui::MainWindow *ui;

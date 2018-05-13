@@ -74,12 +74,17 @@
      </row>
      <column>
       <property name="text">
-       <string>Имитация обжига</string>
+       <string>Имитация отжига</string>
       </property>
      </column>
      <column>
       <property name="text">
        <string>Монте-Карло</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Генетический</string>
       </property>
      </column>
     </widget>
@@ -549,7 +554,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>80</y>
+        <y>70</y>
         <width>111</width>
         <height>21</height>
        </rect>
@@ -562,7 +567,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>140</y>
+        <y>120</y>
         <width>111</width>
         <height>21</height>
        </rect>
@@ -588,7 +593,7 @@
       <property name="geometry">
        <rect>
         <x>310</x>
-        <y>80</y>
+        <y>70</y>
         <width>101</width>
         <height>21</height>
        </rect>
@@ -601,7 +606,7 @@
       <property name="geometry">
        <rect>
         <x>310</x>
-        <y>140</y>
+        <y>120</y>
         <width>91</width>
         <height>21</height>
        </rect>
@@ -627,7 +632,7 @@
       <property name="geometry">
        <rect>
         <x>160</x>
-        <y>80</y>
+        <y>70</y>
         <width>113</width>
         <height>20</height>
        </rect>
@@ -640,7 +645,7 @@
       <property name="geometry">
        <rect>
         <x>160</x>
-        <y>140</y>
+        <y>120</y>
         <width>113</width>
         <height>20</height>
        </rect>
@@ -666,7 +671,7 @@
       <property name="geometry">
        <rect>
         <x>440</x>
-        <y>80</y>
+        <y>70</y>
         <width>113</width>
         <height>20</height>
        </rect>
@@ -679,7 +684,7 @@
       <property name="geometry">
        <rect>
         <x>440</x>
-        <y>140</y>
+        <y>120</y>
         <width>113</width>
         <height>20</height>
        </rect>
@@ -691,7 +696,7 @@
      <widget class="QPushButton" name="bG">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>220</x>
         <y>180</y>
         <width>131</width>
         <height>31</height>
@@ -699,6 +704,29 @@
       </property>
       <property name="text">
        <string>Посчитать</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="tbGtime">
+      <property name="geometry">
+       <rect>
+        <x>300</x>
+        <y>150</y>
+        <width>111</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_16">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>150</y>
+        <width>71</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Время работы</string>
       </property>
      </widget>
     </widget>
