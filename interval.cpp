@@ -14,6 +14,22 @@ double Interval::max(double v1, double v2, double v3, double v4)
     return step1 > step2 ? step1 : step2;
 }
 
+double Interval::min(double v1, double v2)
+{
+    return v1 < v2 ? v1 : v2;
+}
+
+double Interval::max(double v1, double v2)
+{
+    return v1 > v2 ? v1 : v2;
+}
+
+Interval::Interval()
+{
+    this->left = 0;
+    this->right = 0;
+}
+
 Interval::Interval(double value)
 {
     this->left = value;
@@ -122,6 +138,19 @@ Interval Interval::fromString(std::string s)
     return Interval(s);
 }
 
+bool Interval::TryParse(std::string s, Interval &result)
+{
+    try
+    {
+        result = Interval(s);
+        return true;
+    }
+    catch(...)
+    {
+        return false;
+    }
+}
+
 Interval Interval::operator/(const Interval &rhs)
 {
    double tmp1, tmp2, tmp3, tmp4;
@@ -129,19 +158,19 @@ Interval Interval::operator/(const Interval &rhs)
    double max = 0;
    if ((rhs.left < 0) && (rhs.right > 0))
    {
-       min = -__DBL_MAX__;
-       max = __DBL_MAX__;
+       min = -INFINITY;
+       max = INFINITY;
    }
    else if ((rhs.left == 0) && (rhs.right > 0))
    {
-       max = __DBL_MAX__;
+       max = INFINITY;
        tmp1 = this->left / rhs.right;
        tmp2 = this->right / rhs.right;
        min = tmp1 < tmp2 ? tmp1 : tmp2;
    }
    else if ((rhs.right == 0) && (rhs.left < 0))
    {
-       min = -__DBL_MAX__;
+       min = -INFINITY;
        tmp1 = this->left / rhs.left;
        tmp2 = this->right / rhs.left;
        max = tmp1 < tmp2 ? tmp1 : tmp2;

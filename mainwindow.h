@@ -9,6 +9,8 @@
 #include "math_prog.h"
 #include "parser.h"
 #include "interval.h"
+#include "parser_interval.h"
+
 
 namespace Ui {
 class MainWindow;

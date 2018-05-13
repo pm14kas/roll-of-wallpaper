@@ -29,7 +29,8 @@ SOURCES += \
         main.cpp \
         mainwindow.cpp \
     math_prog.cpp \
-    interval.cpp
+    interval.cpp \
+    intervalmath.cpp
 
 HEADERS += \
         mainwindow.h \

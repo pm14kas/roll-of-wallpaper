@@ -191,6 +191,8 @@ void MainWindow::bMCclick()
         ui->tbMCtime->setText(QString::number(hours)+":"+QString::number(mins)+":"+QString::number(secs)+"."+QString::number(result.timer));
 
         QMessageBox::about(this, "Успех", "Расчет произведен");
+       // ParserInterval parserinterval("[1;2]*[-2;1]");
+        QMessageBox::about(this, "govno", parserinterval.calc(std::vector<KeyValueInterval>()).toString(true));
     }
     catch (int cerr)
     {
