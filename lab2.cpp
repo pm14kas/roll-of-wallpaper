@@ -19,10 +19,6 @@ Output lab2::calc(Parser f,
     // формирование рабочей структуры данных
     Individ::g_size = varend;// установить глобально количество хромосом для индивида
     std::vector<Individ> generation;  //одно поколение
-    //double fmin = DBL_MAX;
-
-    //std::vector<KeyValue> x = limitEnd;
-    //сформировать первую случайную популяцию
 
     qint64 timer = QDateTime::currentMSecsSinceEpoch();
     Individ individ(limitEnd);
@@ -36,7 +32,6 @@ Output lab2::calc(Parser f,
             for (int j = 0; j < varend; j++)
             {
                 individ.X[j].d = limitStart[j].d + (limitEnd[j].d - limitStart[j].d) * (double)rand()/(RAND_MAX);
-                //x[j].d = individ.X[j];
             }
 
             individ.F = f.calc(individ.X);
@@ -52,21 +47,18 @@ Output lab2::calc(Parser f,
         {
             return a.F < b.F;
         });
-        //generation.Sort(cmpIndivid);
 
         for (int i = EliteCount; i < popul; i++)
         {
-            if((double)rand()/RAND_MAX<=mutates)
+            if((double)rand()/RAND_MAX <= mutates)
                 generation[i].Mutation(limitStart, limitEnd);
-            if((double)rand()/RAND_MAX<=intersecs)
+            if((double)rand()/RAND_MAX <= intersecs)
                 generation[i].Crossingover(generation[0], limitStart);
 
             generation[i].F = f.calc(generation[i].X);
         }
     }//Цикл поколений
 
-    // выбрать из последнего поколения лучшего
-    //generation.Sort(cmpIndivid);
     std::sort(generation.begin(), generation.end(), [](const Individ& a, const Individ& b)
     {
         return a.F < b.F;

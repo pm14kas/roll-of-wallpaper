@@ -2,13 +2,15 @@
 #define INDIDVID_H
 
 #include <vector>
+#include <algorithm>
+#include <float.h>
 #include "qmath.h"
 #include "parser.h"
 
 class Individ
 {
 public:
-    std::vector<long> G;
+    long *G;
     std::vector<KeyValue> X;
     static int g_size;
     double F;
@@ -16,10 +18,12 @@ public:
     {
         X.resize(variables.size());
         for (unsigned int i = 0; i < variables.size(); i++){
-            X[i].s = variables[i].s;
+            X[i] = variables[i];
         }
-        G.resize(variables.size());
+        G = new long[variables.size()];
+        F = DBL_MAX;
     }
+    Individ() { }
     ~Individ() { }
     void ToGray(std::vector<KeyValue> &limitStart, std::vector<KeyValue> &limitEnd)
     {
