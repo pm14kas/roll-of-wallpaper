@@ -32,6 +32,7 @@ SOURCES += \
     interval.cpp \
     lab2.cpp \
     indidvid.cpp
+    intervalmath.cpp
 
 HEADERS += \
         mainwindow.h \

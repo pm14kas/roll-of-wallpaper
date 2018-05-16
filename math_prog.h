@@ -4,6 +4,7 @@
 #include <QDateTime>
 #include <QtMath>
 #include "parser.h"
+#include "parser_interval.h"
 
 struct Output
 {
