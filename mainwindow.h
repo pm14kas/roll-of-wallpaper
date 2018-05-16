@@ -13,6 +13,7 @@
 #include "parser.h"
 #include "interval.h"
 #include "parser_interval.h"
+#include "intervalmethod.h"
 
 
 namespace Ui {
@@ -38,6 +39,7 @@ public slots:
     void onSpinBox(int value);
 private slots:
     void on_bG_clicked();
+    void on_bI_clicked();
 };
 
 #endif // MAINWINDOW_H

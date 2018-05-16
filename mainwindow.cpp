@@ -330,3 +330,92 @@ void MainWindow::on_bG_clicked()
         QMessageBox::warning(this, ("Внимание!"), QString("Неизвестная функция:\t\t\n'") + QString::fromStdString(f)+"'");
     }
 }
+
+void MainWindow::on_bI_clicked()
+{
+    try
+    {
+        std::vector<KeyValueInterval> limits;
+        for (int i = 0; i < ui->dgvXLimInput->rowCount(); i++)
+        {
+            limits.push_back(
+                        KeyValueInterval(ui->dgvXLimInput->item(i,0)->text().replace(',', '.').toStdString(),
+                                             Interval(
+                                                 ui->dgvXLimInput->item(i,1)->text().replace(',', '.').toDouble(),
+                                                 ui->dgvXLimInput->item(i,2)->text().replace(',', '.').toDouble()
+                                             )
+                                         )
+                        );
+            if (limits[i].d.left > limits[i].d.right) throw 56;
+        }
+        ParserInterval f2(ui->cbFunction->text().replace(',', '.').toStdString());
+        Parser f1(ui->cbFunction->text().replace(',', '.').toStdString());
+        double epsilon = ui->tbEpsilon->text().replace(',', '.').toDouble();
+
+        OutputInterval o = IntervalMethod::calc(f1, f2, limits, epsilon);
+
+        QStringList headers;
+        headers.push_back("f(x)");
+        if (!(ui->dgvOut->item(0, 3)))
+        {
+            ui->dgvOut->setItem(0, 3, new QTableWidgetItem(QString::fromStdString(f2.calc(o.result).toString())));
+        }
+        else
+        {
+            ui->dgvOut->item(0, 3)->setText(QString::fromStdString(f2.calc(o.result).toString()));
+        }
+
+        for (unsigned int i = 0; i < o.result.size(); i++)
+        {
+            if (!(ui->dgvOut->item(i+1, 3)))
+            {
+                ui->dgvOut->setItem(i+1, 3, new QTableWidgetItem(QString::fromStdString(o.result[i].d.toString())));
+            }
+            else
+            {
+                ui->dgvOut->item(i+1, 3)->setText(QString::fromStdString(o.result[i].d.toString()));
+            }
+            headers.push_back(QString::fromStdString(o.result[i].s));
+        }
+
+        ui->dgvOut->setVerticalHeaderLabels(headers);
+
+        //i dont have a clue about qtimespan or whatever, and i dont give a fcuk
+        int secs = qFloor(o.timer/1000);
+        o.timer = o.timer % 1000;
+        int mins = qFloor(secs/60);
+        secs = secs%60;
+        int hours = qFloor(mins/60);
+        mins = mins%60;
+        ui->tbItime->setText(QString::number(hours)+":"+QString::number(mins)+":"+QString::number(secs)+"."+QString::number(o.timer));
+        QMessageBox::about(this, "Успех", "Расчет произведен");
+    }
+    catch (int cerr)
+    {
+        if (cerr == Parser::ERROR_DIVISION_BY_ZERO)
+        {
+            QMessageBox::critical(this, QString("Внимание!"), QString("Деление на ноль!\t"));
+        }
+        else if (cerr == Parser::ERROR_PARENTHESIS)
+        {
+            QMessageBox::critical(this, QString("Внимание!"), QString("Ошибка в скобках!\t"));
+        }
+        else if (cerr == 10)
+        {
+            QMessageBox::critical(this, QString("Внимание!"), QString("Ошибка задания переменных!\t"));
+        }
+        else if (cerr == Parser::ERROR_PARSE)
+        {
+            QMessageBox::critical(this, QString("Внимание!"), QString("Ошибка парсинга!\t"));
+        }
+        else
+        {
+            QMessageBox::critical(this, QString("Внимание!"), QString("Неизвестное исключение!\t"));
+        }
+    }
+
+    catch (std::string f)
+    {
+        QMessageBox::warning(this, ("Внимание!"), QString("Неизвестная функция:\t\t\n'") + QString::fromStdString(f)+"'");
+    }
+}

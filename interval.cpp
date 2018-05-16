@@ -161,21 +161,21 @@ Interval Interval::operator/(const Interval &rhs)
        min = -INFINITY;
        max = INFINITY;
    }
-   else if ((rhs.left == 0) && (rhs.right > 0))
+   if ((rhs.left == 0) && (rhs.right > 0))
    {
        max = INFINITY;
        tmp1 = this->left / rhs.right;
        tmp2 = this->right / rhs.right;
        min = tmp1 < tmp2 ? tmp1 : tmp2;
    }
-   else if ((rhs.right == 0) && (rhs.left < 0))
+   if ((rhs.right == 0) && (rhs.left < 0))
    {
        min = -INFINITY;
        tmp1 = this->left / rhs.left;
        tmp2 = this->right / rhs.left;
        max = tmp1 < tmp2 ? tmp1 : tmp2;
    }
-   else if ((rhs.left > 0) || (rhs.right < 0))
+   if ((rhs.left > 0) || (rhs.right < 0))
    {
        tmp1 = this->left / rhs.left;
        tmp2 = this->right / rhs.right;
