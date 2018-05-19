@@ -19,7 +19,108 @@ double IntervalMethod::wid(std::vector<KeyValueInterval> var, int &index)
     return res;
 }
 
-OutputInterval IntervalMethod::calc(Parser simpleParser, ParserInterval parser, std::vector<KeyValueInterval> limits, double epsilon)
+Interval IntervalMethod::diff(ParserInterval &func, std::vector<KeyValueInterval> &x, int count, double step)
+{
+    if (step == 0)
+    {
+        step = 0.01;
+    }
+
+    std::vector<KeyValueInterval> tempA = x;
+    std::vector<KeyValueInterval> tempB = x;
+
+    tempA[count] -= step;
+    tempB[count] += step;
+
+    Interval df = (func.calc(tempB) - func.calc(tempA)) / (2 * step);
+    return df;
+}
+
+Interval IntervalMethod::diffCopy(ParserInterval &func, std::vector<KeyValueInterval> &x, int count, double step)
+{
+    if (step == 0)
+    {
+        step = 0.01;
+    }
+
+    std::vector<KeyValueInterval> tempA = x;
+    std::vector<KeyValueInterval> tempB = x;
+    std::vector<KeyValueInterval> tempC = x;
+
+    tempA[count] -= step;
+    tempB[count] += step;
+
+    Interval df = (func.calc(tempB) - func.calc(tempC) * 2 + func.calc(tempA)) / (step * step);
+    return df;
+}
+
+Interval IntervalMethod::diffCopy1(ParserInterval &func, std::vector<KeyValueInterval> &x, int count1, int count2, double step)
+{
+    if (step == 0)
+    {
+        step = 0.01;
+    }
+
+    std::vector<KeyValueInterval> tempA = x;
+    std::vector<KeyValueInterval> tempB = x;
+    std::vector<KeyValueInterval> tempC = x;
+    std::vector<KeyValueInterval> tempD = x;
+
+    tempA[count1] += step;
+    tempA[count2] += step;
+
+    tempB[count1] -= step;
+    tempB[count2] += step;
+
+    tempC[count1] += step;
+    tempC[count2] -= step;
+
+    tempD[count1] -= step;
+    tempD[count2] -= step;
+
+
+    Interval df = (func.calc(tempA) - func.calc(tempB) - func.calc(tempC) + func.calc(tempD)) / (step * step * 4);
+    return df;
+
+}
+
+std::vector<Interval> IntervalMethod::diff1(ParserInterval &func, std::vector<KeyValueInterval> x, double step)
+{
+    std::vector<Interval> E;
+    for (unsigned int i = 0; i < x.size(); i++)
+    {
+        E.push_back(diff(func, x, i, step));
+    }
+    return E;
+}
+
+std::vector<Interval> IntervalMethod::diff2(ParserInterval &func, std::vector<KeyValueInterval> x, double step)
+{
+    std::vector<Interval> E;
+    for (unsigned int i = 0; i < x.size(); i++)
+    {
+        E.push_back(diffCopy(func, x, i, step));
+    }
+    return E;
+}
+
+std::vector<std::vector<Interval>> IntervalMethod::diff2Copy(ParserInterval &parser, std::vector<KeyValueInterval> x, double precision)
+{
+    std::vector<std::vector<Interval>> E;
+    for (int i = 0; i < x.size(); i++)
+    {
+        E.push_back(std::vector<Interval>());
+        for (int j = 0; j < x.size(); j++)
+        {
+            E[i].push_back(diffCopy1(parser, x, i, j, precision));
+        }
+    }
+
+    return E;
+}
+
+
+OutputInterval IntervalMethod::calc(Parser &simpleParser, ParserInterval &parser, std::vector<KeyValueInterval> limits, double epsilon)
 {
     QList<std::vector<KeyValueInterval>> L;
     QList<double> f;

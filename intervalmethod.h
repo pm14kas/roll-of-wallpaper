@@ -29,12 +29,20 @@ class IntervalMethod
 public:
     IntervalMethod();
     static OutputInterval calc(
-            Parser simpleParser,
-            ParserInterval parser,
+            Parser &simpleParser,
+            ParserInterval &parser,
             std::vector<KeyValueInterval> limits,
             double epsilon
             );
     static double wid(std::vector<KeyValueInterval> var, int &index);
+
+    static Interval diff(ParserInterval &func, std::vector<KeyValueInterval> &x, int count, double step = 0.01);
+    static Interval diffCopy(ParserInterval &func, std::vector<KeyValueInterval> &x, int count, double step = 0.01);
+    static Interval diffCopy1(ParserInterval &func, std::vector<KeyValueInterval> &x, int count1, int count2, double step = 0.01);
+
+    static std::vector<Interval> diff1(ParserInterval &parser, std::vector<KeyValueInterval> x, double precision = 0.01);
+    static std::vector<Interval> diff2(ParserInterval &parser, std::vector<KeyValueInterval> x, double precision = 0.01);
+    static std::vector<std::vector<Interval>> diff2Copy(ParserInterval &parser, std::vector<KeyValueInterval> x, double precision = 0.01);
 };
 
 #endif // INTERVALMETHOD_H

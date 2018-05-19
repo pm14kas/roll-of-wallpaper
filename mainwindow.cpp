@@ -352,7 +352,24 @@ void MainWindow::on_bI_clicked()
         Parser f1(ui->cbFunction->text().replace(',', '.').toStdString());
         double epsilon = ui->tbEpsilon->text().replace(',', '.').toDouble();
 
+        //Пример использования
+        std::vector< std::vector<Interval>> interval22 = IntervalMethod::diff2Copy(f2, limits);
+
+        QString kek;
+
+        for (int i = 0; i < interval22.size(); i++)
+        {
+            for (int j = 0; j < interval22.size(); j++)
+            {
+                kek += QString::fromStdString(interval22[i][j].toString()) + QString(" ");
+            }
+            kek += "\n";
+        }
+
+        QMessageBox::about(this, " ", kek);
+
         OutputInterval o = IntervalMethod::calc(f1, f2, limits, epsilon);
+
 
         QStringList headers;
         headers.push_back("f(x)");
@@ -389,6 +406,8 @@ void MainWindow::on_bI_clicked()
         mins = mins%60;
         ui->tbItime->setText(QString::number(hours)+":"+QString::number(mins)+":"+QString::number(secs)+"."+QString::number(o.timer));
         QMessageBox::about(this, "Успех", "Расчет произведен");
+
+
     }
     catch (int cerr)
     {
