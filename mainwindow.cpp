@@ -353,20 +353,20 @@ void MainWindow::on_bI_clicked()
         double epsilon = ui->tbEpsilon->text().replace(',', '.').toDouble();
 
         //Пример использования
-        std::vector< std::vector<Interval>> interval22 = IntervalMethod::diff2Copy(f2, limits);
+//        std::vector< std::vector<Interval>> interval22 = IntervalMethod::diff2Copy(f2, limits);
 
-        QString kek;
+//        QString kek;
 
-        for (int i = 0; i < interval22.size(); i++)
-        {
-            for (int j = 0; j < interval22.size(); j++)
-            {
-                kek += QString::fromStdString(interval22[i][j].toString()) + QString(" ");
-            }
-            kek += "\n";
-        }
+//        for (int i = 0; i < interval22.size(); i++)
+//        {
+//            for (int j = 0; j < interval22.size(); j++)
+//            {
+//                kek += QString::fromStdString(interval22[i][j].toString()) + QString(" ");
+//            }
+//            kek += "\n";
+//        }
 
-        QMessageBox::about(this, " ", kek);
+//        QMessageBox::about(this, " ", kek);
 
         OutputInterval o = IntervalMethod::calc(f1, f2, limits, epsilon);
 
@@ -375,11 +375,11 @@ void MainWindow::on_bI_clicked()
         headers.push_back("f(x)");
         if (!(ui->dgvOut->item(0, 3)))
         {
-            ui->dgvOut->setItem(0, 3, new QTableWidgetItem(QString::fromStdString(f2.calc(o.result).toString())));
+            ui->dgvOut->setItem(0, 3, new QTableWidgetItem(QString::fromStdString(o.fmin.toString())));
         }
         else
         {
-            ui->dgvOut->item(0, 3)->setText(QString::fromStdString(f2.calc(o.result).toString()));
+            ui->dgvOut->item(0, 3)->setText(QString::fromStdString(o.fmin.toString()));
         }
 
         for (unsigned int i = 0; i < o.result.size(); i++)

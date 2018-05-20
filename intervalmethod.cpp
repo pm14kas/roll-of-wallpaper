@@ -155,12 +155,42 @@ OutputInterval IntervalMethod::calc(Parser &simpleParser, ParserInterval &parser
         int i_max = L.size();//т.к. размер списка L будет меняться в цикле
         for (int i = 0; i < i_max; ++i)
         {
+//            //тест на монотонность (Он же НОУ)
+//            //если брус является граничным, оставляем, иначе проверяем дальше
+//            bool is_bound = false;
+//            for (int j = 0; j < L[i].size(); ++j)
+//            {
+//                if (L[i][j].d.left == limits[j].d.left || L[i][j].d.right == limits[j].d.right)
+//                {
+//                    is_bound = true;
+//                    break;
+//                }
+//            }
+//            bool NOU_test = is_bound;
+//            //если не граничный брус, выясняем, равна ли где-нибудь нулю его производная. Если нигде не равна, отбрасываем L[i]
+//            if (!is_bound)
+//            {
+//                std::vector<Interval> g = IntervalMethod::diff1(parser, L[i]);
+//                for (int j = 0; j < g.size(); ++j)
+//                {
+//                    if ((g[j].left <= 0 && g[j].right >= 0))
+//                    {
+//                        NOU_test = true;
+//                        break;
+//                    }
+//                }
+//            }
+//            if (!NOU_test)//если тест не пройден, удаляем L[i], переходим к след. итерации
+//            {
+//                to_remove.append(i);
+//            }
+
             std::vector<std::vector<KeyValueInterval>> l;
             l.push_back(limits);
             l.push_back(limits);
             int bisection_index = 0;
             //производим бисекцию
-            w_max = qMax(w_max, wid(L[i], bisection_index));
+            w_max = wid(L[i], bisection_index);
             for (unsigned int j = 0; j < L[i].size(); ++j)
             {
                 if (j == bisection_index)
@@ -192,17 +222,28 @@ OutputInterval IntervalMethod::calc(Parser &simpleParser, ParserInterval &parser
                 if (f_mid > f_mid_tmp)
                     f_mid = f_mid_tmp;//обновляем среднюю точку, если нашли значение меньше
                 //находим центрированную функцию только если do_NOU_test=true
-//                if (do_NOU_test)
-//                {
-//                    f_c = f_c + f_mid_tmp;
-//                    Interval[] g = grad(l[k]);
-//                    for (int j = 0; j < l[k].Length; ++j)
-//                        f_c = f_c + g[j] * (l[k][j] - x_mid[j]);
-//                }
-//                else
-                    f_c = f_nat;
+//                f_c = f_c + f_mid_tmp;
+//                std::vector<Interval> g = IntervalMethod::diff1(parser, L[i]);
+//                for (int j = 0; j < l[k].size(); ++j)
+//                    f_c = f_c + g[j] * (l[k][j] - Interval(x_mid[j].d)).d;
 
-                double new_f = qMax(f_nat.left, f_c.left);
+                //пробуем найти функцию еще в 10 случайных точках из интервала, вдруг получится лучше
+//                for (int p = 0; p < 10; ++p)
+//                {
+//                    std::vector<KeyValue> x_rnd(L[i].size());
+//                    for (int j = 0; j < L[i].size(); ++j)
+//                    {
+//                        x_rnd[j].s = limits[j].s;
+//                        x_rnd[j].d = l[k][j].d.left + (double)rand()/RAND_MAX * (l[k][j].d.right - l[k][j].d.left);
+//                    }
+//                    f_mid_tmp = simpleParser.calc(x_rnd);
+//                    if (f_mid_tmp <= f_mid)
+//                        f_mid = f_mid_tmp;
+
+//                }
+
+                //double new_f = qMax(f_nat.left, f_c.left);
+                double new_f = f_nat.left;
                 if (new_f <= f_mid + std::numeric_limits<double>::epsilon())//тест на среднюю точку
                 {
                     L.append(l[k]);
@@ -245,7 +286,7 @@ OutputInterval IntervalMethod::calc(Parser &simpleParser, ParserInterval &parser
 
     //сортируем брусы по возрастанию значения нижней границы
     bool flag = true;
-    while (flag == true)
+    while (flag)
     {
         flag = false;
         for (int i = 0; i < f.size() - 1; ++i)
