@@ -54,6 +54,7 @@ public:
 
     static bool TryParse(std::string s, Interval& result);
 
+
 };
 
 #endif // INTERVAL_H

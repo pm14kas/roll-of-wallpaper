@@ -30,6 +30,9 @@ SOURCES += \
         mainwindow.cpp \
     math_prog.cpp \
     interval.cpp \
+    lab2.cpp \
+    indidvid.cpp \
+    intervalmethod.cpp \
     intervalmath.cpp
 
 HEADERS += \
@@ -38,7 +41,10 @@ HEADERS += \
     parser_interval.h \
     intervalmath.h \
     interval.h \
-    parser.h
+    parser.h \
+    lab2.h \
+    indidvid.h \
+    intervalmethod.h
 
 FORMS += \
         mainwindow.ui

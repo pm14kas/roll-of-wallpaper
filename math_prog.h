@@ -10,6 +10,7 @@ struct Output
 {
 public:
     std::vector<KeyValue> result;
+    double fmin;
     qint64 timer;
 
     Output()

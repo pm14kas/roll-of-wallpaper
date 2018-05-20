@@ -364,7 +364,7 @@ public:
 
     static double Abs(double left)
     {
-        return abs(left);
+        return left > 0.0 ? left : -left;
     }
 };
 

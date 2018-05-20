@@ -111,7 +111,7 @@
 
     Interval IntervalMath::sin(Interval x)
     {
-        if ((__DBL_MAX__ == std::abs(x.left)) || (__DBL_MAX__ == std::abs(x.right)))
+        if ((INFINITY == std::abs(x.left)) || (INFINITY == std::abs(x.right)))
         {
             return Interval(((double)rand() / (double)RAND_MAX) * 2 - 1, ((double)rand() / (double)RAND_MAX) * 2 - 1);
         }
@@ -155,7 +155,7 @@
 
     Interval IntervalMath::cos(Interval x)
     {
-        if ((__DBL_MAX__ == std::abs(x.left)) || (__DBL_MAX__ == std::abs(x.right)))
+        if ((INFINITY == std::abs(x.left)) || (INFINITY == std::abs(x.right)))
         {
             return Interval(((double)rand() / (double)RAND_MAX) * 2 - 1, ((double)rand() / (double)RAND_MAX) * 2 - 1);
         }
