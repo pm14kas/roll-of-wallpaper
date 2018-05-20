@@ -8,7 +8,7 @@ IntervalMethod::IntervalMethod()
 double IntervalMethod::wid(std::vector<KeyValueInterval> var, int &index)
 {
     double res = 0;
-    for (int i = 0; i < var.size(); ++i)
+    for (unsigned int i = 0; i < var.size(); ++i)
     {
         if (res < var[i].d.right - var[i].d.left)
         {
@@ -107,10 +107,10 @@ std::vector<Interval> IntervalMethod::diff2(ParserInterval &func, std::vector<Ke
 std::vector<std::vector<Interval>> IntervalMethod::diff2Copy(ParserInterval &parser, std::vector<KeyValueInterval> x, double precision)
 {
     std::vector<std::vector<Interval>> E;
-    for (int i = 0; i < x.size(); i++)
+    for (unsigned int i = 0; i < x.size(); i++)
     {
         E.push_back(std::vector<Interval>());
-        for (int j = 0; j < x.size(); j++)
+        for (unsigned int j = 0; j < x.size(); j++)
         {
             E[i].push_back(diffCopy1(parser, x, i, j, precision));
         }

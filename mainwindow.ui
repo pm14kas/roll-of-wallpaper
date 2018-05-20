@@ -127,7 +127,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_4">
       <attribute name="title">
@@ -276,9 +276,9 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>10</y>
+         <y>40</y>
          <width>311</width>
-         <height>191</height>
+         <height>161</height>
         </rect>
        </property>
        <column>
@@ -291,6 +291,35 @@
          <string>Определение</string>
         </property>
        </column>
+      </widget>
+      <widget class="QLabel" name="label_17">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>131</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Количество переменных</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="tbFunc">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>10</y>
+         <width>91</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>255</number>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
       </widget>
      </widget>
     </widget>
@@ -337,7 +366,7 @@
      </sizepolicy>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">

@@ -12,8 +12,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->bMC, SIGNAL(clicked()), this, SLOT(bMCclick()));
 
     connect(ui->tbPer, SIGNAL(valueChanged(int)), this, SLOT(onSpinBox(int)));
+    connect(ui->tbFunc, SIGNAL(valueChanged(int)), this, SLOT(onSpinBoxFunction(int)));
 
-    ui->action_Help->setVisible(false);
+    //ui->action_Help->setVisible(false);
     qsrand(QDateTime::currentMSecsSinceEpoch());
 }
 
@@ -61,6 +62,16 @@ void MainWindow::showResult(int index, Parser f, Output o, QLineEdit* tb)
     QMessageBox::about(this, "Успех", "Расчет произведен");
 }
 
+QString MainWindow::handleCustomFunctions()
+{
+    QString function = ui->cbFunction->text().replace(',', '.');
+    for (int i = ui->cashTomNy->rowCount() - 1; i >= 0 ; i--)
+    {
+        function = function.replace(ui->cashTomNy->item(i, 0)->text(), ui->cashTomNy->item(i, 1)->text());
+    }
+    return function;
+}
+
 void MainWindow::aboutQT()
 {
     QMessageBox::aboutQt(this);
@@ -69,13 +80,19 @@ void MainWindow::aboutQT()
 void MainWindow::aboutHelp()
 {
     QMessageBox::about(this, "Справка", QString("<style>p{margin:2px;} p.header{margin-left:10px;margin-top:5px;}</style>")+
-                       QString("<p class=\"header\"><b>Доступные функции</b>: </p>")+
+                       QString("<p class=\"header\"><b>Доступные функции для числовой математики</b>: </p>")+
+                       QString("<p><i>abs</i> - модуль</p>")+
                        QString("<p><i>exp</i> - функция экспоненты</p>")+
                        QString("<p><i>ln</i> - логарифм по основанию е</p>")+
                        QString("<p><i>sin</i> - синус</p>")+
                        QString("<p><i>cos</i> - косинус</p>")+
                        QString("<p><i>arctg</i> - арктангенс</p>")+
                        QString("<p><i>tg</i> - тангенс</p>")+
+                       QString("<p><i>sqrt</i> - квадратный корень</p>")+
+                       QString("<p class=\"header\"><b>Доступные функции для интервальной математики</b>: </p>")+
+                       QString("<p><i>abs</i> - модуль</p>")+
+                       QString("<p><i>sin</i> - синус</p>")+
+                       QString("<p><i>cos</i> - косинус</p>")+
                        QString("<p><i>sqrt</i> - квадратный корень</p>")+
                        QString("<p class=\"header\"><b>Системные переменные:</b></p>")+
                        QString("<p><i>e</i>, <i>pi</i></p>"));
@@ -95,7 +112,7 @@ void MainWindow::bIOclick()
             end.push_back(KeyValue(ui->dgvXLimInput->item(i,0)->text().replace(',', '.').toStdString(),ui->dgvXLimInput->item(i,2)->text().replace(',', '.').toDouble()));
             if (start[i].d > end[i].d) throw 56;
         }
-        Parser f(ui->cbFunction->text().replace(',', '.').toStdString());
+        Parser f(handleCustomFunctions().replace(',', '.').toStdString());
         double T = ui->tbTmax->text().replace(',', '.').toDouble();
         double L = ui->tbL->text().replace(',', '.').toDouble();
         double r = ui->tbr->text().replace(',', '.').toDouble();
@@ -151,7 +168,7 @@ void MainWindow::bMCclick()
 
         unsigned int maxIterations = qAbs(ui->tbSizeTest->text().toUInt());
 
-        Parser f(ui->cbFunction->text().replace(',', '.').toStdString());
+        Parser f(handleCustomFunctions().replace(',', '.').toStdString());
         Output result;
         result = math_prog::MonteCarlo(f,start, end, maxIterations, ui->checkHJMK->isChecked());
         showResult(1, f, result, ui->tbMCtime);
@@ -252,6 +269,28 @@ void MainWindow::onSpinBox(int value)
     ui->dgvOut->setVerticalHeaderLabels(headersOut);
 }
 
+void MainWindow::onSpinBoxFunction(int value)
+{
+    while (ui->cashTomNy->rowCount() < value)
+    {
+        int rowcount = ui->cashTomNy->rowCount();
+        ui->cashTomNy->setRowCount(rowcount + 1);
+    }
+    ui->cashTomNy->setRowCount(value);
+
+    for (int i = 0; i < ui->cashTomNy->rowCount(); i++)
+    {
+        if (!(ui->cashTomNy->item(i, 0)))
+        {
+            ui->cashTomNy->setItem(i, 0, new QTableWidgetItem("function"+QString::number(i+1)));
+        }
+        if (!(ui->cashTomNy->item(i, 1)))
+        {
+            ui->cashTomNy->setItem(i, 1, new QTableWidgetItem("1+1"));
+        }
+    }
+}
+
 void MainWindow::on_bG_clicked()
 {
     try
@@ -264,7 +303,7 @@ void MainWindow::on_bG_clicked()
             end.push_back(KeyValue(ui->dgvXLimInput->item(i,0)->text().replace(',', '.').toStdString(),ui->dgvXLimInput->item(i,2)->text().replace(',', '.').toDouble()));
             if (start[i].d > end[i].d) throw 56;
         }
-        Parser f(ui->cbFunction->text().replace(',', '.').toStdString());
+        Parser f(handleCustomFunctions().replace(',', '.').toStdString());
         double iters = ui->tIterG->text().replace(',', '.').toDouble();
         double intersecs = ui->tIntersectionsG->text().replace(',', '.').toDouble();
         double mutates = ui->tMutationG->text().replace(',', '.').toDouble();
@@ -348,8 +387,8 @@ void MainWindow::on_bI_clicked()
                         );
             if (limits[i].d.left > limits[i].d.right) throw 56;
         }
-        ParserInterval f2(ui->cbFunction->text().replace(',', '.').toStdString());
-        Parser f1(ui->cbFunction->text().replace(',', '.').toStdString());
+        ParserInterval f2(handleCustomFunctions().replace(',', '.').toStdString());
+        Parser f1(handleCustomFunctions().replace(',', '.').toStdString());
         double epsilon = ui->tbEpsilon->text().replace(',', '.').toDouble();
 
         //Пример использования
