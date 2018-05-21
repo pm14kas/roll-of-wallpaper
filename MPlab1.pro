@@ -33,7 +33,9 @@ SOURCES += \
     lab2.cpp \
     indidvid.cpp \
     intervalmethod.cpp \
-    intervalmath.cpp
+    intervalmath.cpp \
+    combinedmethod.cpp \
+    individinterval.cpp
 
 HEADERS += \
         mainwindow.h \
@@ -44,7 +46,9 @@ HEADERS += \
     parser.h \
     lab2.h \
     indidvid.h \
-    intervalmethod.h
+    intervalmethod.h \
+    combinedmethod.h \
+    individinterval.h
 
 FORMS += \
         mainwindow.ui

@@ -32,9 +32,9 @@ Output math_prog::MonteCarlo(Parser f, std::vector<KeyValue> limitStart, std::ve
             limitStart,
             limitEnd,
             ((double)qrand()/(double)RAND_MAX)-0.5,
-            0.01,
+            0.0001,
             3,
-            100
+            1000000
         );
     }else{
         result.result = xmin;
@@ -67,7 +67,7 @@ Output math_prog::ImitOtzh(Parser f, std::vector<KeyValue> limitStart, std::vect
     }
     Output result;
     if(HJ)
-        result.result = HookJeeves(f, x, limitStart, limitEnd, ((double)qrand()/(double)RAND_MAX)-0.5, 0.01, 3, 100);
+        result.result = HookJeeves(f, x, limitStart, limitEnd, ((double)qrand()/(double)RAND_MAX)-0.5, 0.0001, 3, 1000000);
     else
         result.result = x;
     result.timer = QDateTime::currentMSecsSinceEpoch()-timer;

@@ -14,6 +14,7 @@
 #include "interval.h"
 #include "parser_interval.h"
 #include "intervalmethod.h"
+#include "combinedmethod.h"
 
 
 namespace Ui {
@@ -41,6 +42,7 @@ public slots:
 private slots:
     void on_bG_clicked();
     void on_bI_clicked();
+    void on_bC_clicked();
 };
 
 #endif // MAINWINDOW_H
