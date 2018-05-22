@@ -65,9 +65,45 @@ void MainWindow::showResult(int index, Parser f, Output o, QLineEdit* tb)
 QString MainWindow::handleCustomFunctions()
 {
     QString function = ui->cbFunction->text().replace(',', '.');
-    for (int i = ui->cashTomNy->rowCount() - 1; i >= 0 ; i--)
+
+    for (int k = ui->cashTomNy->rowCount() - 1; k >= 0 ; k--)
     {
-        function = function.replace(ui->cashTomNy->item(i, 0)->text(), ui->cashTomNy->item(i, 1)->text());
+        QString functionName = ui->cashTomNy->item(k,0)->text();
+        QString g = function.mid(function.indexOf(functionName) + functionName.size());
+        g = g.trimmed();
+        if (g[0] != '(') {
+            throw Parser::ERROR_PARENTHESIS;
+        }
+        unsigned int j = 1, i;
+        for (i = 1; i < g.size(); i++)
+        {
+            if (g[i] == '(')
+            {
+                j++;
+            }
+            else if (g[i] == ')')
+            {
+                j--;
+            }
+            if (!j)
+            {
+                break;
+            }
+        }
+        if (j)
+        {
+            throw Parser::ERROR_PARENTHESIS;
+        }
+
+        QString variable = g.mid(1, i-1);
+        QString tempFunctionName = ui->cashTomNy->item(k, 0)->text();
+        QString tempFunctionDefinition = ui->cashTomNy->item(k, 1)->text();
+
+        tempFunctionName = tempFunctionName + "(" + variable + ")";
+        tempFunctionDefinition = tempFunctionDefinition.replace("arg", "(" + variable + ")");
+
+        function = function.replace(tempFunctionName, tempFunctionDefinition);
+
     }
     return function;
 }

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QString>
+#include <QRegExp>
 #include <QDateTime>
 #include <QtMath>
 #include <QScriptEngine>
