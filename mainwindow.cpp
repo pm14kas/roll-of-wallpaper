@@ -29,22 +29,22 @@ void MainWindow::showResult(int index, Parser f, Output o, QLineEdit* tb)
     headers.push_back("f(x)");
     if (!(ui->dgvOut->item(0, index)))
     {
-        ui->dgvOut->setItem(0, index, new QTableWidgetItem(QString::number(f.calc(o.result))));
+        ui->dgvOut->setItem(0, index, new QTableWidgetItem(QString::number(f.calc(o.result), 'f', 10)));
     }
     else
     {
-        ui->dgvOut->item(0, index)->setText(QString::number(f.calc(o.result)));
+        ui->dgvOut->item(0, index)->setText(QString::number(f.calc(o.result), 'f', 10));
     }
 
     for (unsigned int i = 0; i < o.result.size(); i++)
     {
         if (!(ui->dgvOut->item(i+1, index)))
         {
-            ui->dgvOut->setItem(i+1, index, new QTableWidgetItem(QString::number(o.result[i].d)));
+            ui->dgvOut->setItem(i+1, index, new QTableWidgetItem(QString::number(o.result[i].d, 'f', 10)));
         }
         else
         {
-            ui->dgvOut->item(i+1, index)->setText(QString::number(o.result[i].d));
+            ui->dgvOut->item(i+1, index)->setText(QString::number(o.result[i].d, 'f', 10));
         }
         headers.push_back(QString::fromStdString(o.result[i].s));
     }

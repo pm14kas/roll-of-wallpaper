@@ -80,7 +80,7 @@ Output CombinedMethod::calc(Parser fsimple, ParserInterval f,
         start.push_back(KeyValue(generation[0].X[i].s, limits[i].d.left));
         end.push_back(KeyValue(generation[0].X[i].s, limits[i].d.right));
     }
-    o.result = math_prog::HookJeeves(fsimple, x, start, end, m_w / 2, 0.0001, 3, 1000000);
+    o.result = math_prog::HookJeeves(fsimple, x, start, end, m_w / 2, 0.000001, 3, 1000000);
     o.timer = QDateTime::currentMSecsSinceEpoch()-timer;
     //o.fmin = generation[0].F;
     return o;
