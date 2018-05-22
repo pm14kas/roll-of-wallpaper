@@ -370,7 +370,7 @@
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
-      <string>ЛР1</string>
+      <string>Стохастические</string>
      </attribute>
      <widget class="QGroupBox" name="groupBox_2">
       <property name="geometry">
@@ -629,7 +629,7 @@
     </widget>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
-      <string>ЛР2</string>
+      <string>Генетический</string>
      </attribute>
      <widget class="QLabel" name="label_7">
       <property name="geometry">
@@ -826,7 +826,7 @@
     </widget>
     <widget class="QWidget" name="tab_3">
      <attribute name="title">
-      <string>ЛР3</string>
+      <string>Интервальный</string>
      </attribute>
      <widget class="QPushButton" name="bI">
       <property name="geometry">
@@ -893,13 +893,13 @@
     </widget>
     <widget class="QWidget" name="tab_6">
      <attribute name="title">
-      <string>ЛР4</string>
+      <string>Комбинированный</string>
      </attribute>
      <widget class="QPushButton" name="bC">
       <property name="geometry">
        <rect>
         <x>320</x>
-        <y>140</y>
+        <y>180</y>
         <width>91</width>
         <height>31</height>
        </rect>
@@ -912,7 +912,7 @@
       <property name="geometry">
        <rect>
         <x>370</x>
-        <y>100</y>
+        <y>150</y>
         <width>111</width>
         <height>20</height>
        </rect>
@@ -922,7 +922,7 @@
       <property name="geometry">
        <rect>
         <x>270</x>
-        <y>100</y>
+        <y>150</y>
         <width>71</width>
         <height>20</height>
        </rect>
@@ -935,7 +935,7 @@
       <property name="geometry">
        <rect>
         <x>180</x>
-        <y>70</y>
+        <y>120</y>
         <width>181</width>
         <height>21</height>
        </rect>
@@ -948,8 +948,164 @@
       <property name="geometry">
        <rect>
         <x>370</x>
-        <y>70</y>
+        <y>120</y>
         <width>111</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.1</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="tMutationG_2">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>80</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.05</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="tIntersectionsG_2">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>50</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.8</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_18">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>50</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Коэф. скрещиваний</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_19">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>80</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>% лучших особей</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>20</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Размер популяции</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="tGenersG_2">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>50</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>20</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="tPopulG_2">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>20</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>1000</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>80</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Коэф. мутации</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_22">
+      <property name="geometry">
+       <rect>
+        <x>450</x>
+        <y>50</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Число поколений</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="tBestG_2">
+      <property name="geometry">
+       <rect>
+        <x>580</x>
+        <y>80</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>0.05</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_23">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>20</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Количество итераций</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="tIterG_2">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>20</y>
+        <width>113</width>
         <height>20</height>
        </rect>
       </property>

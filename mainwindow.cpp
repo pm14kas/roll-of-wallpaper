@@ -498,12 +498,12 @@ void MainWindow::on_bC_clicked()
         ParserInterval f2(handleCustomFunctions().replace(',', '.').toStdString());
         Parser f1(handleCustomFunctions().replace(',', '.').toStdString());
 
-        double iters = ui->tIterG->text().replace(',', '.').toDouble();
-        double intersecs = ui->tIntersectionsG->text().replace(',', '.').toDouble();
-        double mutates = ui->tMutationG->text().replace(',', '.').toDouble();
-        double popul = ui->tPopulG->text().replace(',', '.').toDouble();
-        double gens = ui->tGenersG->text().replace(',', '.').toDouble();
-        double best = ui->tBestG->text().replace(',', '.').toDouble();
+        double iters = ui->tIterG_2->text().replace(',', '.').toDouble();
+        double intersecs = ui->tIntersectionsG_2->text().replace(',', '.').toDouble();
+        double mutates = ui->tMutationG_2->text().replace(',', '.').toDouble();
+        double popul = ui->tPopulG_2->text().replace(',', '.').toDouble();
+        double gens = ui->tGenersG_2->text().replace(',', '.').toDouble();
+        double best = ui->tBestG_2->text().replace(',', '.').toDouble();
         double maxWidth = ui->maxIntervalWidth->text().replace(',', '.').toDouble();
 
         if (intersecs < 0.0 || intersecs > 1.0)
